@@ -1,7 +1,7 @@
-import cv2
 import mediapipe as mp
 import streamlit as st
 from PIL import Image
+import cv2
 
 # Initialize MediaPipe Hands
 mp_hands = mp.solutions.hands
