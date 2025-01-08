@@ -55,11 +55,11 @@ while run and cap.isOpened():
             landmarks = [(int(lm.x * w), int(lm.y * h)) for lm in hand_landmarks.landmark]
 
             WRIST = landmarks[0]
-            THUMB_TIP = landmarks[4]
-            INDEX_TIP = landmarks[8]
-            MIDDLE_TIP = landmarks[12]
-            RING_TIP = landmarks[16]
-            PINKY_TIP = landmarks[20]
+            THUMB_CMC, THUMB_MCP, THUMB_IP, THUMB_TIP = landmarks[1:5]
+            INDEX_MCP, INDEX_PIP, INDEX_DIP, INDEX_TIP = landmarks[5:9]
+            MIDDLE_MCP, MIDDLE_PIP, MIDDLE_DIP, MIDDLE_TIP = landmarks[9:13]
+            RING_MCP, RING_PIP, RING_DIP, RING_TIP = landmarks[13:17]
+            PINKY_MCP, PINKY_PIP, PINKY_DIP, PINKY_TIP = landmarks[17:21]
 
             # Detect Palm
             if (
