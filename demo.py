@@ -148,7 +148,7 @@ while run and cap.isOpened():
     frame = Image.fromarray(frame)
 
     # Display the frame in Streamlit
-    frame_placeholder.image(frame, use_column_width=True)
+    frame_placeholder.image(frame, use_container_width=True)
     gesture_placeholder.text(f"Detected Gestures: {', '.join(detected_gestures) if detected_gestures else 'None'}")
 
 cap.release()
