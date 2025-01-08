@@ -49,9 +49,9 @@ while cap.isOpened():
                 and PINKY_TIP[1] < PINKY_MCP[1]
                 and abs(INDEX_TIP[0] - PINKY_TIP[0]) > w * 0.1  # Ensure fingers are spread
             ):
-                cv2.putText(frame, "Palm", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                cv2.putText(frame, f"{hand_label} Palm", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
-            # Detect "Thumbs Down" (adjusted for mirroring)
+            # Detect "Thumbs Down"
             elif (
                 THUMB_TIP[1] > THUMB_MCP[1]
                 and THUMB_MCP[1] > INDEX_MCP[1]
@@ -59,7 +59,7 @@ while cap.isOpened():
                 and THUMB_MCP[1] > RING_MCP[1]
                 and THUMB_MCP[1] > PINKY_MCP[1]
             ):
-                cv2.putText(frame, "Thumbs Down", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                cv2.putText(frame, f"{hand_label} Thumbs Down", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
             # Detect "Thumbs Up"
             elif (
@@ -69,7 +69,7 @@ while cap.isOpened():
                 and THUMB_MCP[1] < RING_MCP[1]
                 and THUMB_MCP[1] < PINKY_MCP[1]
             ):
-                cv2.putText(frame, "Thumbs Up", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                cv2.putText(frame, f"{hand_label} Thumbs Up", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
             # Detect "Index Pointing"
             elif (
@@ -78,7 +78,7 @@ while cap.isOpened():
                 and RING_TIP[1] > RING_MCP[1]
                 and PINKY_TIP[1] > PINKY_MCP[1]
             ):
-                cv2.putText(frame, "Index Pointing", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+                cv2.putText(frame, f"{hand_label} Index Pointing", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
 
             # Detect "Fist"
             elif (
@@ -87,7 +87,7 @@ while cap.isOpened():
                 and RING_TIP[1] > RING_MCP[1]
                 and PINKY_TIP[1] > PINKY_MCP[1]
             ):
-                cv2.putText(frame, "Fist", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+                cv2.putText(frame, f"{hand_label} Fist", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
 
             # Detect "Victory" (Peace Sign)
             elif (
@@ -96,7 +96,7 @@ while cap.isOpened():
                 and RING_TIP[1] > RING_MCP[1]
                 and PINKY_TIP[1] > PINKY_MCP[1]
             ):
-                cv2.putText(frame, "Peace", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+                cv2.putText(frame, f"{hand_label} Peace", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
 
             # Detect "OK" Gesture
             elif (
@@ -106,7 +106,7 @@ while cap.isOpened():
                 and RING_TIP[1] < RING_MCP[1]
                 and PINKY_TIP[1] < PINKY_MCP[1]
             ):
-                cv2.putText(frame, "OK", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+                cv2.putText(frame, f"{hand_label} OK", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
 
     # Display Frame
     cv2.imshow('Hand Gesture Recognition (Mirrored)', frame)
