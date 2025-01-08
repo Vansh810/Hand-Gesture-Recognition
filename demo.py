@@ -61,23 +61,87 @@ while run and cap.isOpened():
             RING_TIP = landmarks[16]
             PINKY_TIP = landmarks[20]
 
-            # Detect "Palm Open"
+            # Detect Palm
             if (
-                THUMB_TIP[1] < landmarks[3][1] and
-                INDEX_TIP[1] < landmarks[5][1] and
-                MIDDLE_TIP[1] < landmarks[9][1] and
-                RING_TIP[1] < landmarks[13][1] and
-                PINKY_TIP[1] < landmarks[17][1]
+                    THUMB_TIP[1] < THUMB_MCP[1]
+                    and INDEX_TIP[1] < INDEX_MCP[1]
+                    and MIDDLE_TIP[1] < MIDDLE_MCP[1]
+                    and RING_TIP[1] < RING_MCP[1]
+                    and PINKY_TIP[1] < PINKY_MCP[1]
+                    and abs(INDEX_TIP[0] - PINKY_TIP[0]) > w * 0.1  # Ensure fingers are spread
             ):
-                detected_gestures.append(f"{hand_label} Palm Open")
+                if hand_label == 'Left':
+                    if THUMB_TIP[0] > INDEX_TIP[0]:
+                        detected_gestures.append(f"{hand_label} Palm Open")
+                else:
+                    if THUMB_TIP[0] < INDEX_TIP[0]:
+                        detected_gestures.append(f"{hand_label} Palm Open")
+
+            # Detect "Thumbs Down"
+            elif (
+                    THUMB_TIP[1] > THUMB_MCP[1]
+                    and THUMB_MCP[1] > INDEX_MCP[1]
+                    and THUMB_MCP[1] > MIDDLE_MCP[1]
+                    and THUMB_MCP[1] > RING_MCP[1]
+                    and THUMB_MCP[1] > PINKY_MCP[1]
+            ):
+                detected_gestures.append(f"{hand_label} Thumbs Down")
 
             # Detect "Thumbs Up"
-            if (
-                THUMB_TIP[1] < landmarks[3][1] and
-                THUMB_TIP[1] < INDEX_TIP[1] and
-                THUMB_TIP[1] < MIDDLE_TIP[1]
+            elif (
+                    THUMB_TIP[1] < THUMB_MCP[1]
+                    and THUMB_MCP[1] < INDEX_MCP[1]
+                    and THUMB_MCP[1] < MIDDLE_MCP[1]
+                    and THUMB_MCP[1] < RING_MCP[1]
+                    and THUMB_MCP[1] < PINKY_MCP[1]
             ):
                 detected_gestures.append(f"{hand_label} Thumbs Up")
+
+            # Detect "Index Pointing" or "L"
+            elif (
+                    INDEX_TIP[1] < INDEX_MCP[1]
+                    and MIDDLE_TIP[1] > MIDDLE_MCP[1]
+                    and RING_TIP[1] > RING_MCP[1]
+                    and PINKY_TIP[1] > PINKY_MCP[1]
+            ):
+                if hand_label == 'Left':
+                    if THUMB_TIP[0] < INDEX_TIP[0]:
+                        detected_gestures.append(f"{hand_label} Index Pointing")
+                    else:
+                        detected_gestures.append(f"{hand_label} L")
+                else:
+                    if THUMB_TIP[0] > INDEX_TIP[0]:
+                        detected_gestures.append(f"{hand_label} Index Pointing")
+                    else:
+                        detected_gestures.append(f"{hand_label} L")
+
+            # Detect "Fist"
+            elif (
+                    INDEX_TIP[1] > INDEX_MCP[1]
+                    and MIDDLE_TIP[1] > MIDDLE_MCP[1]
+                    and RING_TIP[1] > RING_MCP[1]
+                    and PINKY_TIP[1] > PINKY_MCP[1]
+            ):
+                detected_gestures.append(f"{hand_label} Fist")
+
+            # Detect "Victory" (Peace Sign)
+            elif (
+                    INDEX_TIP[1] < INDEX_MCP[1]
+                    and MIDDLE_TIP[1] < MIDDLE_MCP[1]
+                    and RING_TIP[1] > RING_MCP[1]
+                    and PINKY_TIP[1] > PINKY_MCP[1]
+            ):
+                detected_gestures.append(f"{hand_label} Peace")
+
+            # Detect "OK" Gesture
+            elif (
+                    abs(THUMB_TIP[0] - INDEX_TIP[0]) < w * 0.1
+                    and abs(THUMB_TIP[1] - INDEX_TIP[1]) < h * 0.1
+                    and MIDDLE_TIP[1] < MIDDLE_MCP[1]
+                    and RING_TIP[1] < RING_MCP[1]
+                    and PINKY_TIP[1] < PINKY_MCP[1]
+            ):
+                detected_gestures.append(f"{hand_label} Ok")
 
     # Convert BGR to RGB for Streamlit
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
